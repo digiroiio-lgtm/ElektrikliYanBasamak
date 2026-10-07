@@ -1,9 +1,10 @@
 import {test,expect} from '@playwright/test';
 
-test('Vehicle selection preserves model and year in quote, reset and Escape work',async({page})=>{
+test('Vehicle selection preserves model and year in quote, reset and Escape work',async({page},testInfo)=>{
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
  await page.goto('/');
  await expect(page).toHaveTitle(/Elektrikli Yan Basamak/);
+ await page.screenshot({path:testInfo.outputPath('homepage.png'),fullPage:true});
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await page.selectOption('#finder-brand','Chery');
  await page.selectOption('#finder-model','Tiggo 8 Pro Max');
